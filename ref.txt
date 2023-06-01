@@ -1,0 +1,40 @@
+const express =require("express");
+const mongoose =require("mongoose");
+const app=express();
+const http=require("http")
+app.use(express.json())
+//connect mongo
+
+let URI="mongodb+srv://mahacm98:Maha@c.m98@cluster0.igmsqwf.mongodb.net/signup?retryWrites=true&w=majority"
+
+mongoose.connect(URI);
+   var db=mongoose.connection;
+   db.on('error',console.error.bind(console,'connection error'));
+   db.once('open',function callback(){
+    console.log('database connected successfully');
+   });
+
+
+
+// start server
+app.listen(1000,()=>{
+    console.log("Server Started....!");
+})
+
+// make api
+
+app.post("/post",async(req,res)=>{
+    console.log(req.body);
+    const {data}=req.body;
+
+    try{
+        if(data=="maha"){
+            res.send({status:"Ok"});
+        }else{
+            res.send({status:"user not valid"});
+             }
+    } catch(error){
+        res.send({status:"something went wront try again"});
+    }
+});
+
